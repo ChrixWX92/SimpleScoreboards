@@ -10,6 +10,7 @@ import de.theamychan.scoreboard.api.ScoreboardAPI;
 import de.theamychan.scoreboard.network.DisplaySlot;
 import de.theamychan.scoreboard.network.Scoreboard;
 import de.theamychan.scoreboard.network.ScoreboardDisplay;
+import de.theamychan.scoreboard.network.SortOrder;
 
 public class Listeners implements Listener {
 
@@ -20,11 +21,17 @@ public class Listeners implements Listener {
         Player p = e.getPlayer();
         if (!Main.noScoreboardWorlds.contains(p.getLevel().getName())) {
             Scoreboard scoreboard = ScoreboardAPI.createScoreboard();
-            ScoreboardDisplay scoreboardDisplay = scoreboard.addDisplay(DisplaySlot.SIDEBAR, "dumy", Main.scoreboardTitle);
-            Main.scoreboardText.forEach((text) -> scoreboardDisplay.addLine(Main.getScoreboardString(p, text), line++));
-            line = 0;
-            scoreboard.showFor(p);
-            Main.scoreboards.put(p, scoreboard);
+
+            ScoreboardDisplay scoreboardDisplay = new ScoreboardDisplay(scoreboard,"scoreboard","Current Word: ",SortOrder.ASCENDING);
+            if (Main.scoreboardTitle != null) {
+            scoreboardDisplay = scoreboard.addDisplay(DisplaySlot.SIDEBAR, "dumy", Main.scoreboardTitle);}
+            if (Main.scoreboardText != null) {
+                ScoreboardDisplay finalScoreboardDisplay = scoreboardDisplay;
+                Main.scoreboardText.forEach((text) -> finalScoreboardDisplay.addLine(Main.getScoreboardString(p, text), line++));
+                line = 0;
+                scoreboard.showFor(p);
+                Main.scoreboards.put(p, scoreboard);
+            }
         }
     }
 

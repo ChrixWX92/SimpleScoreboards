@@ -11,9 +11,11 @@ import de.theamychan.scoreboard.network.ScoreboardDisplay;
 import java.util.Map;
 import java.util.UUID;
 
+import static me.petterim1.scoreboards.Main.th;
+
 public class ScoreboardUpdater implements Runnable {
 
-    private int line;
+    public static int line;
 
     @Override
     public void run() {
@@ -28,7 +30,7 @@ public class ScoreboardUpdater implements Runnable {
                     Scoreboard scoreboard = ScoreboardAPI.createScoreboard();
                     ScoreboardDisplay scoreboardDisplay = scoreboard.addDisplay(DisplaySlot.SIDEBAR, "dumy", Main.scoreboardTitle);
 
-                    Main.scoreboardText.forEach((text) -> scoreboardDisplay.addLine(Main.getScoreboardString(p, text), line++));
+                    if (th){ Main.scoreboardText.forEach((text) -> scoreboardDisplay.addLine(Main.getScoreboardString(p, text), line));}
 
                     try {
                         Main.scoreboards.get(p).hideFor(p);
@@ -37,7 +39,7 @@ public class ScoreboardUpdater implements Runnable {
 
                     scoreboard.showFor(p);
                     Main.scoreboards.put(p, scoreboard);
-                    line = 0;
+                    //line = 0;
                 }
             }
         } catch (Exception ignored) {
