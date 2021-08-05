@@ -5,7 +5,7 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 
-import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
+// import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 
 import de.theamychan.scoreboard.network.Scoreboard;
 
@@ -17,10 +17,12 @@ public class Main extends PluginBase implements Listener {
 
     private static final int currentConfig = 3;
 
+    public static boolean th = false;
+
     private static Class<?> placeholderAPI;
 
     static String scoreboardTitle;
-    static List<String>  scoreboardText;
+    static List<String> scoreboardText;
     static List<String> noScoreboardWorlds;
 
     static final Map<Player, Scoreboard> scoreboards = new HashMap<>();
@@ -31,13 +33,14 @@ public class Main extends PluginBase implements Listener {
     public void onEnable() {
         APIDownloader.checkAndRun(this);
 
+        /* TODO: See APIDownloader for more info.
         try {
             placeholderAPI = Class.forName("com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI");
         } catch (Exception e) {
             getLogger().critical("Error with PlaceholderAPI" , e);
             getServer().getPluginManager().disablePlugin(this);
             return;
-        }
+        }*/
 
         saveDefaultConfig();
         Config config = getConfig();
@@ -46,8 +49,8 @@ public class Main extends PluginBase implements Listener {
             getServer().getLogger().warning("The config file of SimpleScoreboards plugin is outdated. Please delete the old config.yml file.");
         }
 
-        scoreboardTitle = config.getString("title");
-        scoreboardText = config.getStringList("text");
+        //scoreboardTitle = config.getString("title");
+        //scoreboardText = config.getStringList("text");
         noScoreboardWorlds = config.getStringList("noScoreboardWorlds");
 
         getServer().getPluginManager().registerEvents(new Listeners(), this);
@@ -61,7 +64,7 @@ public class Main extends PluginBase implements Listener {
 
     static String getScoreboardString(Player p, String text) {
         try {
-            return (String) placeholderAPI.getDeclaredMethod("translateString", String.class, Player.class).invoke(PlaceholderAPI.getInstance(), getKDRStats(p, text), p);
+            return text;// (String) placeholderAPI.getDeclaredMethod("translateString", String.class, Player.class).invoke(PlaceholderAPI.getInstance(), getKDRStats(p, text), p); TODO: Ignoring translation from other plugins
         } catch (Exception e) {
             e.printStackTrace();
             return "PlaceholderAPI error!";

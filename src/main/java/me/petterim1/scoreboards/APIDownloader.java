@@ -26,7 +26,7 @@ public class APIDownloader {
                 server.getLogger().logException(e);
                 server.getPluginManager().disablePlugin(plugin);
                 return;
-            }
+            }//TODO: Replacing this with own, adapted library*/
 
             plugin.getLogger().info("ScoreboardAPI downloaded successfully");
             server.getPluginManager().loadPlugin(scoreboardApi);
@@ -51,7 +51,9 @@ public class APIDownloader {
             plugin.getLogger().info("PlaceholderAPI downloaded successfully");
             server.getPluginManager().loadPlugin(placeholderApi);
         }
-
+// TODO: Disable PlaceholderAPI (issues with downloading) - if we need it for PvP we can clone the repository and host/download it from elsewhere. (Remember to restore dependency in the pom too)
+    // TODO: Alternatively, write your own API Chris, you lazy so and so.
+      /*
         if (server.getPluginManager().getPlugin("PlaceholderAPI") == null) {
             plugin.getLogger().info("Downloading PlaceholderAPI...");
 
@@ -71,5 +73,8 @@ public class APIDownloader {
             plugin.getLogger().info("PlaceholderAPI downloaded successfully");
             server.getPluginManager().loadPlugin(placeholderApi);
         }
+*/
     }
+
+
 }
